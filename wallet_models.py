@@ -7,11 +7,15 @@ db = peewee.SqliteDatabase(configuration.get("wallet_database_path"))
 
 
 class Products(peewee.Model):
-    id = peewee.BigIntegerField()
+    product_id = peewee.BigIntegerField()
     status = peewee.IntegerField()
 
     class Meta:
         database = db
+        indexes = (
+            # create a unique on from/to/date
+            (('product_id', 'status'), True),
+        )
 
     class Status(Enum):
         blank = 1
@@ -97,4 +101,4 @@ class Transactions(peewee.Model):
 
 
 db.connect()
-db.create_tables([Transactions, Names])
+db.create_tables([Transactions, Names, Products])

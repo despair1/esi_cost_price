@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from wallet_models import Names
+from wallet_models import Names, Products
 app = Flask(__name__)
 
 
@@ -35,7 +35,13 @@ def new_product():
     product_id = request.args.get("product_id")
     print("new product", product_id)
     j = dict()
-    j["status"] = "test"
+    j["status"] = "exists"
+    n = Products.get_or_none(Products.product_id == product_id)
+    if n is None and product_id:
+        q = Products(product_id=product_id, status=Products.Status.blank.value)
+        q.save()
+        j["status"] = "blank"
+
     return jsonify(j)
 
 
