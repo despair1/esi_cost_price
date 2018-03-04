@@ -1,9 +1,14 @@
 $(document).ready(  function() {
     var item;
-
+    function open_product_detail(product_id) {
+        $('#post_product_id').val(product_id);
+        $('#invisible_form').submit();
+    }
     function log( message ) {
-      $( "<div>" ).text( message ).prependTo( "#log" );
+      $( "<div>" ).text( message ).attr(
+      { 'onClick' : 'document.forms["invisible_form"].submit(); return false;'}).prependTo( "#log" );
       $( "#log" ).scrollTop( 0 );
+      //open_product_detail(12)
     }
     function success(data,status,xhr) {
         console.log(data);

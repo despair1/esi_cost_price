@@ -4,22 +4,39 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script  src="{{url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
-Hello11
 
-<div class="ui-widget">
-  <label for="birds">Birds: </label>
-  <input id="birds">
+<div class="container">
+    <h4>Выберите Продукт</h4>
+    <div class="ui-widget">
+        <label for="birds">Birds: </label>
+        <input id="birds">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Новые продукты</div>
+        <div class="panel-body" id="log">Panel Content</div>
+    </div>
 </div>
-<div id="log" ></div>
-</div>
+
+
 <div class="ui-widget" style="margin-top:2em; font-family:Arial">
   Result:
   <div id="log"  class="ui-widget-content"></div>
 </div>
+<form id="invisible_form" action="/product_detail.html" method="post" target="_blank">
+  <input id="post_product_id" name="product_id" type="hidden" value="default">
+</form>
 </body>
 </html>

@@ -6,14 +6,15 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     # return 'Hello World!'
-    """
-    response = make_response(render_template("main.html"))
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"  # HTTP 1.1.
-    response.headers["Pragma"] = "no-cache"  # HTTP 1.0.
-    response.headers["Expires"] = "0"  # Proxies.
-    return response """
     # print(render_template("main.html"))
     return render_template("main.html")
+
+
+@app.route("/product_detail.html", methods=['GET', 'POST'])
+def product_detail():
+    f = request.form.get("product_id")
+    print(f, "under construction")
+    return f + " under construction"
 
 
 @app.route("/item_names.json")
