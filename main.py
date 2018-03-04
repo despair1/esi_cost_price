@@ -18,7 +18,6 @@ def hello_world():
 
 @app.route("/item_names.json")
 def item_names_json():
-    j = {"aaaa" : "a1", "bbbb" : "b2", "ccc" : "c3", "cca" : "c4" }
     j = []
     term = request.args.get("term")
     q = Names.select().where(Names.name.contains(term)).limit(10)
@@ -29,6 +28,16 @@ def item_names_json():
         j.append(jj)
 
     return jsonify(j)
+
+
+@app.route("/new_product.json")
+def new_product():
+    product_id = request.args.get("product_id")
+    print("new product", product_id)
+    j = dict()
+    j["status"] = "test"
+    return jsonify(j)
+
 
 @app.after_request
 def add_header(r):

@@ -1,8 +1,20 @@
 import peewee
 import config_init
+from enum import Enum
 
 configuration = config_init.config_init
 db = peewee.SqliteDatabase(configuration.get("wallet_database_path"))
+
+
+class Products(peewee.Model):
+    id = peewee.BigIntegerField()
+    status = peewee.IntegerField()
+
+    class Meta:
+        database = db
+
+    class Status(Enum):
+        blank = 1
 
 
 class Names(peewee.Model):
