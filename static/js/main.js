@@ -6,7 +6,8 @@ $(document).ready(  function() {
     }
     function log( message ) {
       $( "<div>" ).text( message ).attr(
-      { 'onClick' : 'document.forms["invisible_form"].submit(); return false;'}).prependTo( "#log" );
+      { 'onClick' : '$("#post_product_id").val($(this).attr("data-product-id"));document.forms["invisible_form"].submit(); return false;',
+        'data-product-id' : item.value}).prependTo( "#log" );
       $( "#log" ).scrollTop( 0 );
       //open_product_detail(12)
     }
