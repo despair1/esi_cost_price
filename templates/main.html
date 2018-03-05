@@ -18,7 +18,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container" margin-right="auto" margin-left="auto"  max-width="600px">
     <h4>Выберите Продукт</h4>
     <div class="ui-widget">
         <label for="birds">Birds: </label>
@@ -26,7 +26,13 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">Новые продукты</div>
-        <div class="panel-body" id="log">Panel Content</div>
+        <div class="panel-body" id="log">
+            {% for entry in entries %}
+                <div data-product-id="{{entry.product_id}}"
+                     onClick='$("#post_product_id").val($(this).attr("data-product-id"));
+                     document.forms["invisible_form"].submit(); return false;'>{{entry.names.name}}</div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

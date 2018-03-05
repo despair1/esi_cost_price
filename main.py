@@ -7,7 +7,8 @@ app = Flask(__name__)
 def hello_world():
     # return 'Hello World!'
     # print(render_template("main.html"))
-    return render_template("main.html")
+    entries = Products.select(Products.product_id, Names.name).join(Names, on=(Products.product_id == Names.id))
+    return render_template("main.html", entries=entries)
 
 
 @app.route("/product_detail.html", methods=['GET', 'POST'])
