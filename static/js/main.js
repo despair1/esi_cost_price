@@ -1,4 +1,5 @@
 $(document).ready(  function() {
+
     var item;
     function open_product_detail(product_id) {
         $('#post_product_id').val(product_id);
