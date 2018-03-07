@@ -14,18 +14,24 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script  src="{{url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{url_for('static', filename='js/main.js') }}"></script>
     <style>
-    @media (min-width: 1200px) {
-        .container{
+.container{
             max-width: 650px;
-        }
-    }
+}
+.stripe{}
+.stripe :nth-of-type(2n) :only-child {
+        background: #aaaaaa;
+
+}
+.col-lg-9 {
+ cursor: pointer;
+ }
     </style>
 </head>
 <body>
 
-<div class="container"  width="300px">
+<div class="container" width="300px">
     <h4>Выберите Продукт</h4>
     <div class="ui-widget">
         <label for="birds">Birds: </label>
@@ -33,23 +39,26 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">Новые продукты</div>
-        <div class="panel-body" id="log">
+        <div class="panel-body stripe" id="log">
             {% for entry in entries %}
-                <div data-product-id="{{entry.product_id}}"
-                     onClick='$("#post_product_id").val($(this).attr("data-product-id"));
-                     document.forms["invisible_form"].submit(); return false;'>{{entry.names.name}}</div>
+            <div class="row" data-product-id-row="{{entry.product_id}}">
+                <div class="col-lg-9">
+                    <div data-product-id="{{entry.product_id}}"
+                         onClick='$("#post_product_id").val($(this).attr("data-product-id"));
+                        document.forms["invisible_form"].submit(); return false;'>{{entry.names.name}}
+                    </div>
+                </div>
+                <div class="col-lg-2" onclick="delete_blank({{entry.product_id}})">
+                    Delete
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
 </div>
 
-
-<div class="ui-widget" style="margin-top:2em; font-family:Arial">
-  Result:
-  <div id="log"  class="ui-widget-content"></div>
-</div>
 <form id="invisible_form" action="/product_detail.html" method="post" target="_blank">
-  <input id="post_product_id" name="product_id" type="hidden" value="default">
+    <input id="post_product_id" name="product_id" type="hidden" value="default">
 </form>
 </body>
 </html>

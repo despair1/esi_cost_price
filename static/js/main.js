@@ -1,3 +1,14 @@
+function delete_blank(product_id){
+        $.getJSON("delete_blank.json", {
+            product_id : product_id
+            }).done(function() {
+                $(this).parent().remove()
+                var a = "[data-product-id-row='" + product_id+"']"
+                $(a).remove()
+                console.log($(this))
+            })
+    }
+
 $(document).ready(  function() {
 
     var item;
@@ -19,6 +30,8 @@ $(document).ready(  function() {
             log( "Selected: " + item.value + " aka " + item.label );
         }
     }
+
+
 
     $( "#birds" ).autocomplete({
       source: "item_names.json",

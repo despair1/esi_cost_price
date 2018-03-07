@@ -18,6 +18,13 @@ def product_detail():
     return f + " under construction"
 
 
+@app.route("/delete_blank.json")
+def delete_blank():
+    product_id = request.args.get("product_id")
+    print(product_id)
+    return jsonify([])
+
+
 @app.route("/item_names.json")
 def item_names_json():
     j = []
