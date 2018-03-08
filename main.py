@@ -22,6 +22,10 @@ def product_detail():
 def delete_blank():
     product_id = request.args.get("product_id")
     print(product_id)
+    if product_id:
+        a = Products.delete().where((Products.product_id == product_id) &
+                                    (Products.status == Products.Status.blank.value)).execute()
+        print(a)
     return jsonify([])
 
 
