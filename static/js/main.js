@@ -1,3 +1,5 @@
+
+
 function delete_blank(product_id){
         $.getJSON("delete_blank.json", {
             product_id : product_id

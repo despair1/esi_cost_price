@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from wallet_models import Names, Products
+
 app = Flask(__name__)
 
 
@@ -13,9 +14,12 @@ def hello_world():
 
 @app.route("/product_detail.html", methods=['GET', 'POST'])
 def product_detail():
-    f = request.form.get("product_id")
-    print(f, "under construction")
-    return f + " under construction"
+    product_id = request.form.get("product_id")
+    # print(f, "under construction")
+    name = Names.get_or_none(Names.id == product_id)
+    if name:
+        return render_template("product_detail.html", name=name, materials=[])
+    return "wrong product_id " + product_id
 
 
 @app.route("/delete_blank.json")
@@ -73,4 +77,3 @@ def add_header(r):
 
 if __name__ == '__main__':
     app.run()
-

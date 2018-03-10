@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!--
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-    <script src="{{url_for('static', filename='js/main.js') }}"></script>
-    <style>
-.container{
-            max-width: 650px;
-}
-.stripe{}
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!--
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        -->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="{{url_for('static', filename='js/main.js') }}"></script>
+        <style>
+            .container{
+                max-width: 650px;
+            }
+            .stripe{}
 
-.stripe .row:nth-child(2n) {
-  background: #eee;
-}
-.col-lg-9 {
- cursor: pointer;
- }
-    </style>
-</head>
-<body>
+            .stripe .row:nth-child(2n) {
+                background: #eee;
+            }
+            .col-lg-9 {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
 
-<div class="container" width="300px">
-    <h4>Выберите Продукт</h4>
-    <div class="ui-widget">
-        <label for="birds">Birds: </label>
-        <input id="birds">
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">Новые продукты</div>
-        <div class="panel-body stripe" id="log">
-            {% for entry in entries %}
-            <div class="row" data-product-id-row="{{entry.product_id}}">
-                <div class="col-lg-9">
-                    <div data-product-id="{{entry.product_id}}"
-                         onClick='$("#post_product_id").val($(this).attr("data-product-id"));
-                        document.forms["invisible_form"].submit(); return false;'>{{entry.names.name}}
+        <div class="container" >
+            <h4>Выберите Продукт</h4>
+            <div class="ui-widget">
+                <label for="birds">Birds: </label>
+                <input id="birds">
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Новые продукты</div>
+                <div class="panel-body stripe" id="log">
+                    {% for entry in entries %}
+                    <div class="row" data-product-id-row="{{entry.product_id}}">
+                        <div class="col-lg-9">
+                            <div data-product-id="{{entry.product_id}}"
+                                 onClick='$("#post_product_id").val($(this).attr("data-product-id"));
+    document.forms["invisible_form"].submit(); return false;'>{{entry.names.name}}
+                            </div>
+                        </div>
+                        <div class="col-lg-2" onclick="delete_blank({{entry.product_id}})">
+                            Delete
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-2" onclick="delete_blank({{entry.product_id}})">
-                    Delete
+                    {% endfor %}
                 </div>
             </div>
-            {% endfor %}
         </div>
-    </div>
-</div>
 
-<form id="invisible_form" action="/product_detail.html" method="post" target="_blank">
-    <input id="post_product_id" name="product_id" type="hidden" value="default">
-</form>
-</body>
+        <form id="invisible_form" action="/product_detail.html" method="post" target="_blank">
+            <input id="post_product_id" name="product_id" type="hidden" value="default">
+        </form>
+    </body>
 </html>
