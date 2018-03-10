@@ -48,6 +48,7 @@ $(document).ready(  function() {
         }
     }
     function insert_blank_product(data,status,xhr) {
+        return;
         if ( data.status == "blank") {
             $(blank_template({product_id : item.value,
                             product_name: item.label})).prependTo("#log")
@@ -55,16 +56,18 @@ $(document).ready(  function() {
     }
 
 
-    $( "#birds" ).autocomplete({
+    $( "#material" ).autocomplete({
       source: "item_names.json",
       minLength: 2,
       select: function( event, ui ) {
         item = ui.item;
-        $.getJSON("new_product.json", {
-        product_id: ui.item.value}, insert_blank_product
+        $.getJSON("add_material.json", {
+            material_id: ui.item.value,
+            product_id: $("#product").attr("data-product-id")},
+        insert_blank_product
         )
         event.preventDefault()
-        $("#birds").val("")
+        $("#material").val("")
       }
     });
   } );

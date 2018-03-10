@@ -29,7 +29,7 @@
         <div class="container" >
 
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" id="product" data-product-id="{{name.id}}">
                     <div class="row">
                         <div class="col-lg-6">
                             {{name.name}}
@@ -41,22 +41,25 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="panel-body stripe" id="material-body">
-            {% for entry in materials %}
-                <div class="row" data-product-id-row="{{entry.product_id}}">
-                    <div class="col-lg-9">
-                            <div data-product-id="{{entry.product_id}}"
-                                onClick='$("#post_product_id").val($(this).attr("data-product-id"));
-                                document.forms["invisible_form"].submit(); return false;'>
-                                    {{entry.names.name}}
-                            </div>
+                <div class="panel-body stripe" id="material-body">
+                {% for entry in materials %}
+                    <div class="row" data-material-id="{{entry.material_id}}">
+                        <div class="col-lg-4">{{entry.names.name}}
+                            <!-- 
+                                <div data-product-id="{{entry.material_id}}"
+                                    onClick='$("#post_product_id").val($(this).attr("data-product-id"));
+                                    document.forms["invisible_form"].submit(); return false;'>
+                                        {{entry.names.name}}
+                                </div> -->
+                        </div>
+                        <div class="col-lg-2"> <!--  onclick="delete_blank({{entry.material_id}})"> -->
+                                Delete
+                        </div>
                     </div>
-                    <div class="col-lg-2" onclick="delete_blank({{entry.product_id}})">
-                            Delete
-                    </div>
+                {% endfor %}
                 </div>
-            {% endfor %}
+                
+                
             </div>
         </div>
         

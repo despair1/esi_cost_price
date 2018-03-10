@@ -21,6 +21,25 @@ class Products(peewee.Model):
         blank = 1
 
 
+class Materials(peewee.Model):
+    product_id = peewee.ForeignKeyField(Products, Products.product_id)
+    material_id = peewee.BigIntegerField()
+    quantity = peewee.IntegerField()
+    price_type = peewee.IntegerField()
+
+    class PriceType(Enum):
+        last_week_avg = 1
+        last_month_avg = 2
+        last_transaction = 3
+        market_avg = 4
+
+    class Meta:
+        database = db
+        indexes = (
+            # create a unique on from/to/date
+            (('product_id', 'material_id'), True),
+        )
+
 class Names(peewee.Model):
     id = peewee.BigIntegerField(unique=True)
     name = peewee.CharField()
@@ -101,4 +120,4 @@ class Transactions(peewee.Model):
 
 
 db.connect()
-db.create_tables([Transactions, Names, Products])
+db.create_tables([Transactions, Names, Products, Materials])

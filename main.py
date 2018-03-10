@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from wallet_models import Names, Products
+from wallet_models import Names, Products, Materials
 
 app = Flask(__name__)
 
@@ -18,9 +18,29 @@ def product_detail():
     # print(f, "under construction")
     name = Names.get_or_none(Names.id == product_id)
     if name:
-        return render_template("product_detail.html", name=name, materials=[])
+        materials = Materials.select(Materials.material_id, Names.name)\
+            .join(Names, on=(Materials.material_id == Names.id))\
+            .where(Materials.product_id == product_id)
+        return render_template("product_detail.html", name=name, materials=materials)
     return "wrong product_id " + product_id
 
+
+@app.route("/add_material.json")
+def add_material():
+    product_id = request.args.get("product_id")
+    material_id = request.args.get("material_id")
+    if material_id and product_id:
+        product = Products.get_or_none(Products.product_id == product_id)
+        material = Materials.get_or_none((Materials.material_id == material_id)&
+                                         (Materials.product_id == product_id))
+        print(product, material)
+        if product and material is None:
+            Materials.create(material_id=material_id,
+                             product_id=product_id,
+                             quantity=1,
+                             price_type=Materials.PriceType.last_week_avg.value)
+
+    return jsonify([])
 
 @app.route("/delete_blank.json")
 def delete_blank():
