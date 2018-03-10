@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{name.name}} detail</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="{{url_for('static', filename='js/product_detail.js') }}"></script>
+        <style>
+            .container{
+                max-width: 650px;
+            }
+            .stripe{}
+
+            .stripe .row:nth-child(2n) {
+                background: #eee;
+            }
+            .col-lg-9 {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container" >
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{name.name}}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="ui-widget">
+                                <label for="material">Add Material: </label>
+                                <input id="material"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body stripe" id="material-body">
+            {% for entry in materials %}
+                <div class="row" data-product-id-row="{{entry.product_id}}">
+                    <div class="col-lg-9">
+                            <div data-product-id="{{entry.product_id}}"
+                                onClick='$("#post_product_id").val($(this).attr("data-product-id"));
+                                document.forms["invisible_form"].submit(); return false;'>
+                                    {{entry.names.name}}
+                            </div>
+                    </div>
+                    <div class="col-lg-2" onclick="delete_blank({{entry.product_id}})">
+                            Delete
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 
+        <form id="invisible_form" action="/product_detail.html" method="post" target="_blank">
+            <input id="post_product_id" name="product_id" type="hidden" value="default">
+        </form>  -->
+    </body>
+</html>
