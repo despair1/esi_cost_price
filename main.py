@@ -1,6 +1,6 @@
 from flask import Flask, render_template, jsonify, request
 from wallet_models import Names, Products, Materials
-
+from materials import get_materials
 app = Flask(__name__)
 
 
@@ -21,6 +21,7 @@ def product_detail():
         materials = Materials.select(Materials.material_id, Names.name)\
             .join(Names, on=(Materials.material_id == Names.id))\
             .where(Materials.product_id == product_id)
+        get_materials(product_id)
         return render_template("product_detail.html", name=name, materials=materials)
     return "wrong product_id " + product_id
 
