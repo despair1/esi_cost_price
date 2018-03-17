@@ -1,7 +1,21 @@
 from flask import Flask, render_template, jsonify, request
 from wallet_models import Names, Products, Materials
-from materials import get_materials
+from materials import get_materials_avg_price, get_price_cost
 app = Flask(__name__)
+
+
+@app.route("/update_quantity.json")
+def update_quantity():
+    product_id = request.args.get("product_id")
+    material_id = request.args.get("material_id")
+    quantity = int(request.args.get("quantity"))
+    if product_id and material_id and quantity > 0:
+        q = Materials.update(quantity=quantity).where(
+            (Materials.product_id == product_id) &
+            (Materials.material_id == material_id)
+        )
+        q.execute()
+    return jsonify([])
 
 
 @app.route('/')
@@ -18,11 +32,14 @@ def product_detail():
     # print(f, "under construction")
     name = Names.get_or_none(Names.id == product_id)
     if name:
+
         materials = Materials.select(Materials.material_id, Names.name)\
             .join(Names, on=(Materials.material_id == Names.id))\
             .where(Materials.product_id == product_id)
-        get_materials(product_id)
-        return render_template("product_detail.html", name=name, materials=materials)
+        materials = get_materials_avg_price(product_id)
+        cost_prices = get_price_cost(materials)
+        return render_template("product_detail.html", name=name, materials=materials,
+                               cost_prices=cost_prices)
     return "wrong product_id " + product_id
 
 

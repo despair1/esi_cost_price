@@ -12,7 +12,7 @@
         <script src="{{url_for('static', filename='js/product_detail.js') }}"></script>
         <style>
             .container{
-                max-width: 650px;
+                max-width: 950px;
             }
             .stripe{}
 
@@ -44,19 +44,37 @@
                 <div class="panel-body stripe" id="material-body">
                 {% for entry in materials %}
                     <div class="row" data-material-id="{{entry.material_id}}">
-                        <div class="col-lg-4">{{entry.names.name}}
-                            <!-- 
-                                <div data-product-id="{{entry.material_id}}"
-                                    onClick='$("#post_product_id").val($(this).attr("data-product-id"));
-                                    document.forms["invisible_form"].submit(); return false;'>
-                                        {{entry.names.name}}
-                                </div> -->
+                        <div class="col-lg-4">{{entry.material_name}}
+                            
+                        </div>
+                        <div class="col-lg-1"> 
+                            <input id="material{{entry.material_id}}" value="{{entry.quantity}}"
+                                   size="6" 
+                                   onblur="update_quantity({{name.id}},{{entry.material_id}})">  
+                            
+                        </div>
+                        <div class="col-lg-1"> 
+                                Delete
                         </div>
                         <div class="col-lg-2"> <!--  onclick="delete_blank({{entry.material_id}})"> -->
-                                Delete
+                            {{entry.avg_price1}}
+                        </div>
+                        <div class="col-lg-2"> <!--  onclick="delete_blank({{entry.material_id}})"> -->
+                            {{entry.avg_price2}}
+                        </div>
+                        <div class="col-lg-2"> <!--  onclick="delete_blank({{entry.material_id}})"> -->
+                            {{entry.avg_price3}}
                         </div>
                     </div>
                 {% endfor %}
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-1"></div>
+                    {% for entry in cost_prices %}
+                    <div class="col-lg-2">{{entry}}</div>
+                    {% endfor %}
+                </div>
                 </div>
                 
                 
